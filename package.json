@@ -1,0 +1,15 @@
+{
+  "name": "nuxt-wrapper",
+  "version": "1.0.0",
+  "description": "Wrapper for launching `npm run generate` with predefined configuration",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index"
+  },
+  "author": "phoenix_ru",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
