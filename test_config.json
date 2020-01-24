@@ -1,0 +1,105 @@
+{
+    "status_code": 200,
+    "message": "success",
+    "meta": {
+        "theme": "themea"
+    },
+    "data": [
+        {
+            "id": 1,
+            "template": "template00",
+            "title": "Home",
+            "url": "home",
+            "content": [
+                {
+                    "_group": "pageheader",
+                    "headline": "The Art of Teaching is the Art of Assisting Discovery",
+                    "subline": "Free html5 templates Made by freehtml5.co",
+                    "image": "https://app.rockability.band/storage/app/media/image_swiper.jpg"
+                },
+                {
+                    "_group": "counter",
+                    "counters": [
+                        {
+                            "text": "Students",
+                            "count": "40356"
+                        },
+                        {
+                            "text": "Courses",
+                            "count": "30290"
+                        },
+                        {
+                            "text": "Instructor",
+                            "count": "2039"
+                        },
+                        {
+                            "text": "Earnings",
+                            "count": "997585"
+                        }
+                    ]
+                }
+            ],
+            "is_home": 1,
+            "hide_page": 0,
+            "parent_id": null,
+            "nest_left": 1,
+            "nest_right": 2,
+            "nest_depth": 0
+        },
+        {
+            "id": 2,
+            "template": "template00",
+            "title": "About us",
+            "url": "about-us",
+            "content": [
+                {
+                    "_group": "pageheader",
+                    "headline": "About us",
+                    "subline": "here we go",
+                    "image": "https://app.rockability.band/storage/app/media/image_swiper.jpg"
+                },
+                {
+                    "_group": "counter",
+                    "counters": [
+                        {
+                            "text": "Test",
+                            "count": "999"
+                        }
+                    ]
+                }
+            ],
+            "is_home": 0,
+            "hide_page": 0,
+            "parent_id": null,
+            "nest_left": 3,
+            "nest_right": 4,
+            "nest_depth": 0
+        },
+        {
+            "id": 3,
+            "template": "template00",
+            "title": "Contact",
+            "url": "contact",
+            "content": [],
+            "is_home": 0,
+            "hide_page": 0,
+            "parent_id": null,
+            "nest_left": 5,
+            "nest_right": 6,
+            "nest_depth": 0
+        },
+        {
+            "id": 4,
+            "template": "template00",
+            "title": "Volos Page",
+            "url": "volos-page",
+            "content": [],
+            "is_home": 0,
+            "hide_page": 0,
+            "parent_id": null,
+            "nest_left": 7,
+            "nest_right": 8,
+            "nest_depth": 0
+        }
+    ]
+}
