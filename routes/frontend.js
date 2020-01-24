@@ -1,29 +1,29 @@
+/*
+ * Express router imports
+ */
+
 const express = require('express')
 const router = express.Router()
-const Generator = require('../handlers/generate.handler')
 
-function respondSuccess(res, data) {
-  res.json({ code: 200, message: 'Success', data })
-}
+/*
+ * Internal dependencies
+ */
+
+const { respond } = require('../handlers/commons')
+const { handleGenerate } = require('../handlers/generate.handler')
+
+/*
+ * Router configuration
+ */
 
 router.get('/', (req, res) => {
-  respondSuccess(res, 'Application works, great!')
+  respond(res, 'Application works, great!')
 })
 
-router.get('/generate', (req, res) => {
-  // todo invoke handler and check credentials (using October CMS API)
-  // todo call child process generate
-  const generatorConfiguration = { foo: 'bar' }
+router.get('/generate', handleGenerate)
 
-  /* Create a generator with specified configuration */
-  const generator = new Generator(generatorConfiguration)
-  generator.generate()
-
-  respondSuccess(res, { secret: 'TOKEN HERE' })
-  // todo push token to temporary storage (even in-memory should do it)
-  // todo after that, client must establish socket connection using secret he got and we will do other things through it
-
-  generator.cleanup()
-})
+/*
+ * Exports
+ */
 
 module.exports = router

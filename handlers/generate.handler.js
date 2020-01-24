@@ -1,39 +1,52 @@
-const Builder = require('../generator/Builder')
+const API = require('../handlers/api.handler')
+const ConfigBuilder = require('../generator/ConfigBuilder')
 const NPMInterface = require('../generator/NpmInterface')
+const { respond } = require('./commons')
 
-module.exports = class Generator {
-  constructor(config) {
-    this.config = config
+async function handleGenerate(req, res) {
+  /* Verify credentials */
+  const credentials = await API.checkCredentials(req.query.credentials)
+  if (!credentials.valid) {
+    respond(res, null, 401)
+    return
+  }
+  // todo push token to temporary storage (even in-memory should do it)
+
+  /* Fetch the configuration */
+  const generatorConfiguration = await API.fetchConfiguration(credentials)
+  if (!generatorConfiguration || generatorConfiguration.error) {
+    respond(res, 'Configuration not found', 404) // ?
+    return
   }
 
-  config = {
-    get() {
-      return this._builtConfig
-    },
-    set(value) {
-      // todo build config
-      this._builtConfig = value
-    }
-  }
+  /* Fetch the necessary files */
+  const filePromises = API.fetchFiles(credentials, generatorConfiguration)
 
-  generate() {
-    if (!this.config) {
-      throw new Error('Please, specify config before generating')
-    }
+  /* Supply client with the token */
+  respond(res, { token: credentials.token })
+  // todo after that, client must establish socket connection using secret he got and we will do other things through it
+  // todo update the state for the current client
 
-    // write config?
+  /* Build and write config */
+  const configBuilder = new ConfigBuilder(generatorConfiguration)
+  configBuilder.addFiles(await Promise.all(filePromises))
+  const builtConfig = configBuilder.build()
+  configBuilder.write()
 
-    /* Invoke generation */
-    const npmInterface = new NPMInterface()
-    npmInterface.runGenerate()
+  /* Setup environment variables */
+  const envConvig = {}
 
-    /* Notify about success */
-    // todo return value
-    console.log('generated from config', this.config)
-  }
+  /* Invoke generation */
+  const npmInterface = new NPMInterface(builtConfig, envConvig)
+  await npmInterface.runGenerate()
 
-  cleanup() {
-    // todo
-    console.log('cleaning up')
-  }
+  /* Notify about success */
+  console.log('Generated from config', builtConfig)
+
+  /* Clean up */
+  console.log('Cleaning up')
+}
+
+module.exports = {
+  handleGenerate
 }
