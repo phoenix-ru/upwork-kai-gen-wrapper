@@ -2,7 +2,23 @@
     "status_code": 200,
     "message": "success",
     "meta": {
-        "theme": "themea"
+        "theme": "themea",
+        "theme_root": "http://media.vorlon.tech/themes/themea"
+    },
+    "themeassets": {
+        "css": [
+            "/css/animate.css",
+            "/css/icomoon.css"
+        ],
+        "fonts": [
+            "/fonts/icomoon/icomoon.eot",
+            "/fonts/icomoon/icomoon.ttf",
+            "/fonts/icomoon/icomoon.svg",
+            "/fonts/icomoon/icomoon.woff"
+        ],
+        "sass": [
+            "/sass/style.scss"
+        ]
     },
     "data": [
         {
