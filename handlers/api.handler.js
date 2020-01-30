@@ -17,8 +17,12 @@ async function checkCredentials(credentials) {
  * @param {*} credentials The credentials assigned to a client
  */
 async function fetchConfiguration(credentials) {
-  // todo call api
-  return testConfig
+  try {
+    const res = await axios.get('https://app.vorlon.tech/api/v1/pages')
+    return res.data
+  } catch (e) {
+    return { error: e }
+  }
 }
 
 /**
