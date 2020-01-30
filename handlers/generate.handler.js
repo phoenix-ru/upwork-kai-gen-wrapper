@@ -3,6 +3,9 @@ const ConfigBuilder = require('../generator/ConfigBuilder')
 const NPMInterface = require('../generator/NpmInterface')
 const { respond } = require('./commons')
 
+/* Define cwd for the app */
+const APP_CWD = '../nuxt-app'
+
 async function handleGenerate(req, res) {
   /* Verify credentials */
   const credentials = await API.checkCredentials(req.query.credentials)
@@ -67,27 +70,24 @@ async function handleGenerate(req, res) {
     return
   }
 
-  /* Add client id */
-  configBuilder.useClientId(credentials.token)
+  /* Add env */
+  configBuilder.addEnv({
+    CLIENT_ID: credentials.token
+  })
 
   /* Add assets */
   configBuilder.addAssets(assets)
 
   /* Build and write config */
   const builtConfig = configBuilder.build()
-  await builtConfig.write()
+  await builtConfig.write(APP_CWD)
   notifyProgress(socket, {
     event: 'progress',
     stage: 1
   })
 
-  /* Setup environment variables */
-  const envConvig = {
-    TOKEN: credentials.token
-  }
-
   /* Invoke generation */
-  const npmInterface = new NPMInterface(builtConfig, envConvig)
+  const npmInterface = new NPMInterface(APP_CWD)
   await npmInterface.runGenerate()
 
   /* Notify about success */
@@ -98,5 +98,6 @@ async function handleGenerate(req, res) {
 }
 
 module.exports = {
-  handleGenerate
+  handleGenerate,
+  APP_CWD
 }

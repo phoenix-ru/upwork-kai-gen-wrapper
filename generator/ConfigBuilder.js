@@ -36,18 +36,21 @@ function writeFile(path, data) {
  * The built config ready to be inserted at project
  */
 class Config {
-  constructor(config, assets, clientId) {
+  constructor(configBuilder) {
+    /* Assign config */
     this.config = {
-      clientId,
-      data: config.data,
+      data: configBuilder.config.data,
       theme: {
-        name: config.meta.theme
+        name: configBuilder.config.meta.theme
       }
     }
 
-    /* Add and separate assets */
+    /* Assign environment variables */
+    this.env = configBuilder.env
+
+    /* Add and split assets */
     this._assets = {}
-    for (const asset of assets) {
+    for (const asset of configBuilder.assets) {
       /* No assets of this type were present */
       if (!this._assets[asset.type]) {
         this._assets[asset.type] = []
@@ -69,12 +72,12 @@ class Config {
     }
   }
 
-  write() {
+  write(dir) {
     /* Array of all file promises */
     const allPromises = []
 
     /* File path for the build */
-    const buildRoot = '../nuxt-app/build'
+    const buildRoot = `${dir}/build`
     const buildFilesPath = `${buildRoot}/${this.config.clientId}`
 
     /* Write configuration */
@@ -87,8 +90,15 @@ class Config {
       }
     }
 
-    /* Write .env config */
-    allPromises.push(writeFile(`${buildRoot}/.env`, `CLIENT_ID=${this.config.clientId}`))
+    /* Compose .env config */
+    let envString = ''
+    const envKeys = Object.keys(this.env)
+    if (this.env && envKeys.length) {
+      envKeys.forEach(key => { envString += `${String(key)}=${String(this.env[key])}` })
+    }
+
+    /* Write .env */
+    allPromises.push(writeFile(`${buildRoot}/.env`, envString))
 
     return Promise.all(allPromises)
   }
@@ -108,12 +118,13 @@ class ConfigBuilder {
     return this
   }
 
-  useClientId(clientId) {
-    this.clientId = clientId
+  addEnv(env) {
+    this.env = env
+    return this
   }
 
   build() {
-    return new Config(this.config, this.assets, this.clientId)
+    return new Config(this)
   }
 }
 

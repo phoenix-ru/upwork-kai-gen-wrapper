@@ -1,9 +1,8 @@
 const { spawn } = require('child_process')
-const CWD = '../nuxt-app/'
 
 module.exports = class NPMInterface {
-  constructor() {
-    // todo
+  constructor(cwd) {
+    this.cwd = cwd
   }
 
   runGenerate() {
@@ -12,7 +11,7 @@ module.exports = class NPMInterface {
 
       try {
         proc = spawn('npm', ['run', 'generate'], {
-          cwd: CWD,
+          cwd: this.cwd,
           shell: true,
           stdio: 'inherit'
         })
