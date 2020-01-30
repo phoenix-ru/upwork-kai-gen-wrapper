@@ -41,7 +41,7 @@ class Config {
     this.config = {
       data: configBuilder.config.data,
       theme: {
-        name: configBuilder.config.meta.theme
+        name: configBuilder.config.meta.foldername
       }
     }
 
