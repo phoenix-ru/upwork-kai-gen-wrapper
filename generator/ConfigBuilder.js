@@ -78,7 +78,7 @@ class Config {
 
     /* File path for the build */
     const buildRoot = `${dir}/build`
-    const buildFilesPath = `${buildRoot}/${this.config.clientId}`
+    const buildFilesPath = `${buildRoot}/${this.env.CLIENT_ID}`
 
     /* Write configuration */
     allPromises.push(writeFile(`${buildFilesPath}/config.json`, JSON.stringify(this.config)))
