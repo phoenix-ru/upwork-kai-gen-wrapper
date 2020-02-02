@@ -63,12 +63,26 @@ class Config {
       })
     }
 
+    // for (const styleType of ['css', 'sass', 'scss']) {
+    //   if (this._assets[styleType]) {
+    //     this._assets[styleType].forEach(a => this.config.theme.css.push(a.path))
+    //   }
+    // }
+
     /* Configure css */
     this.config.theme.css = []
-    for (const styleType of ['css', 'sass', 'scss']) {
-      if (this._assets[styleType]) {
-        this._assets[styleType].forEach(a => this.config.theme.css.push(a.path))
-      }
+    const entryStyles = configBuilder.config.meta.entry_styles
+    if (entryStyles && entryStyles.length) {
+      entryStyles.forEach(style => this.config.theme.css.push(style))
+    } else {
+      this.config.theme.css = [
+        '/css/animate.css',
+        '/css/icomoon.css',
+        '/css/magnific-popup.css',
+        '/css/owl.carousel.min.css',
+        '/css/owl.theme.default.min.css',
+        '/sass/style.scss'
+      ]
     }
   }
 
