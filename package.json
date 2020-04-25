@@ -2,15 +2,18 @@
   "name": "nuxt-wrapper",
   "version": "1.0.0",
   "description": "Wrapper for launching `npm run generate` with predefined configuration",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index"
+    "start": "node server"
   },
   "author": "phoenix_ru",
   "license": "MIT",
   "dependencies": {
+    "archiver": "^3.1.1",
     "axios": "^0.19.2",
-    "express": "^4.17.1"
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "form-data": "^3.0.0"
   }
 }
