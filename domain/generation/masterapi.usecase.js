@@ -18,7 +18,8 @@ const APP_CWD = '../nuxt-app'
 async function handleGenerate(MasterApi, data, notify) {
   /* Verify credentials */
   const credentials = await MasterApi.verifyCredentials(data.credentials)
-  if (!credentials.valid) {
+  if (!credentials.valid || credentials.error) {
+    if (credentials.error) console.error(credentials.error)
     notify.error('Invalid credentials', 401)
     return
   }
